@@ -11,12 +11,38 @@ import { jwtTokenVerify } from "../middlewares/index.js";
 const router = express.Router();
 
 router.get("/", jwtTokenVerify, async (req: Request, res) => {
+  const userID = req.decodedToken?.userID;
+  try {
+    const user = await User.findOne({ _id: userID }, { password: 0 });
+    //User not Found
+    if (!user) {
+      return res.status(404).send({ message: `Username ${userID} not found.` });
+    }
+    //If not admin and not his user data
+    if (user.id !== userID) {
+      return res.status(401).send({
+        message: "Unauthorized This is not your Data",
+      });
+    }
+    return res.status(200).send({
+      userID: user.id,
+      username: user.username,
+      displayName: user.display_name,
+    });
+  } catch (error) {
+    const err = error as Error;
+    //Internal Server Error
+    return res.status(500).send({ message: err.message });
+  }
+});
+
+router.get("/by-username", jwtTokenVerify, async (req: Request, res) => {
   const { username } = req.query;
   const token = req.decodedToken;
   //Convert Object to Array
   const role = Object.values(token!.role);
   try {
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({ username: username }, { password: 0 });
     //User not Found
     if (!user) {
       return res
@@ -29,7 +55,11 @@ router.get("/", jwtTokenVerify, async (req: Request, res) => {
         message: "Unauthorized You're not Admin or This is not your Data",
       });
     }
-    return res.status(200).send(user);
+    return res.status(200).send({
+      userID: user.id,
+      username: user.username,
+      displayName: user.display_name,
+    });
   } catch (error) {
     const err = error as Error;
     //Internal Server Error
@@ -74,7 +104,12 @@ router.post("/login", async (req, res) => {
         .send({ message: `${username}: Incorrect password` });
     }
     const token = jwtTokenGenerator(user.id, user.role);
-    return res.status(202).send({ token: token });
+    return res.status(202).send({
+      token: token,
+      userID: user.id,
+      username: user.username,
+      displayName: user.display_name,
+    });
   } catch (error) {
     const err = error as Error;
     //Conflict

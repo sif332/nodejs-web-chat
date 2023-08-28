@@ -49,8 +49,7 @@ router.get("/belong", async (req: Request, res) => {
   console.log(userID);
   try {
     const results = await UserRoom.find({ user_id: userID }).populate(
-      "room_id",
-      "room_name"
+      "room_id"
     );
 
     const rooms = results.map((room) => room.room_id);

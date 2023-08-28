@@ -21,7 +21,9 @@ router.get("/by-roomid", async (req: Request, res) => {
         message: `Username ${roomID} not found or This room is not yours`,
       });
     }
-    const messages = await Message.find({ room_id: roomID });
+    const messages = await Message.find({ room_id: roomID }).sort({
+      created_at: -1,
+    });
     return res.status(201).send(messages);
   } catch (error) {
     const err = error as Error;
