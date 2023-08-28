@@ -22,9 +22,11 @@ const io = new Server(server, {
   },
 });
 
-const port = process.env.PORT || 4000;
-const MONGO_INITDB_ROOT_USERNAME = process.env.MONGO_INITDB_ROOT_USERNAME;
-const MONGO_INITDB_ROOT_PASSWORD = process.env.MONGO_INITDB_ROOT_PASSWORD;
+const port = process.env.PORT ?? 4000;
+const MONGO_INITDB_ROOT_USERNAME =
+  process.env.MONGO_INITDB_ROOT_USERNAME ?? "nodejs";
+const MONGO_INITDB_ROOT_PASSWORD =
+  process.env.MONGO_INITDB_ROOT_PASSWORD ?? "1234";
 const MONGO_URL = `mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@localhost:27017/web-chat`;
 mongoose
   .connect(MONGO_URL)

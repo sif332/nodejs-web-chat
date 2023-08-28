@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-const TOKEN_SECRET = process.env.TOKEN_SECRET || "token1234";
+const TOKEN_SECRET = process.env.TOKEN_SECRET ?? "token1234";
 
 export function jwtTokenVerify(
   req: Request,

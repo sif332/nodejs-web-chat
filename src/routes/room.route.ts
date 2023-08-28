@@ -46,7 +46,6 @@ router.post("/join", async (req: Request, res) => {
 
 router.get("/belong", async (req: Request, res) => {
   const userID = req.decodedToken?.userID;
-  console.log(userID);
   try {
     const results = await UserRoom.find({ user_id: userID }).populate(
       "room_id"

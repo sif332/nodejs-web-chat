@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const saltRounds = 10;
-const TOKEN_SECRET = process.env.TOKEN_SECRET || "token1234";
+const TOKEN_SECRET = process.env.TOKEN_SECRET ?? "token1234";
 
 export async function hashPassword(plainPwd: string) {
   const hashPwd = await bcrypt.hash(plainPwd, saltRounds);
