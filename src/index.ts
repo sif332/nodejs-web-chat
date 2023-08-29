@@ -15,18 +15,24 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://webchat.xaiphersk.com",
+      "http://localhost:3000",
+      "http://192.168.1.33:3000",
+    ],
+  })
+);
 
 const server = http.createServer(app);
 
-const port = process.env.PORT ?? 4000;
+const port = process.env.PORT ?? 8080;
 const TOKEN_SECRET = process.env.TOKEN_SECRET ?? "token1234";
-const MONGO_INITDB_ROOT_USERNAME =
-  process.env.MONGO_INITDB_ROOT_USERNAME ?? "nodejs";
-const MONGO_INITDB_ROOT_PASSWORD =
-  process.env.MONGO_INITDB_ROOT_PASSWORD ?? "1234";
+const MONGO_DATABASE_USERNAME = process.env.MONGO_DATABASE_USERNAME ?? "nodejs";
+const MONGO_DATABASE_PASSWORD = process.env.MONGO_DATABASE_PASSWORD ?? "1234";
 const MONGO_BASEURL = process.env.MONGO_BASEURL ?? "localhost:27017";
-const MONGO_URL = `mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@${MONGO_BASEURL}/web-chat`;
+const MONGO_URL = `mongodb://${MONGO_DATABASE_USERNAME}:${MONGO_DATABASE_PASSWORD}@${MONGO_BASEURL}/web-chat`;
 
 mongoose
   .connect(MONGO_URL)
@@ -44,8 +50,13 @@ app.get("/", (req, res) => {
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: [
+      "https://webchat.xaiphersk.com",
+      "http://localhost:3000",
+      "http://192.168.1.33:3000",
+    ],
   },
+  transports: ["polling"],
 });
 
 io.on("connection", (socket) => {
@@ -88,5 +99,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(port, () => {
-  console.log(`Socket io running at http://localhost:${port}/`);
+  console.log(`Socket io running at Port: ${port}`);
 });
