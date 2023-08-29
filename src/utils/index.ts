@@ -21,6 +21,6 @@ export function jwtTokenGenerator(userID: string, role: string[]) {
     userID: userID,
     role: role,
   };
-  const token = jwt.sign(payload, TOKEN_SECRET, { expiresIn: "1h" });
+  const token = jwt.sign(payload, TOKEN_SECRET, { expiresIn: "1d" });
   return token;
 }

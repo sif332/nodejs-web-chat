@@ -20,6 +20,7 @@ declare global {
   interface IMessage {
     userID: string;
     username: string;
+    profilePic: string;
     time: string;
     message: string;
   }
@@ -32,6 +33,14 @@ declare global {
   interface IJwtToken {
     userID: string;
     role: string[];
+  }
+
+  interface IGetMessageByRoomID {
+    user_id: string;
+    username: string;
+    room_id: string;
+    message: string;
+    created_at: string;
   }
 }
 
