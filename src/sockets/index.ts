@@ -31,7 +31,6 @@ export async function createMessage(
     return newMessage;
     // return res.status(201).send(messages);
   } catch (error) {
-    const err = error as Error;
     return null;
   }
 }

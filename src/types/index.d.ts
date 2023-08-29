@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import { Request } from "express";
 
 declare global {
   interface IRoom {
@@ -45,7 +45,7 @@ declare global {
 }
 
 declare module "express" {
-  interface Request {
+  interface CustomRequest extends Request {
     decodedToken?: IJwtToken;
   }
 }

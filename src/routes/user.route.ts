@@ -1,4 +1,4 @@
-import express, { Request } from "express";
+import express, { CustomRequest } from "express";
 import User from "../models/user.model.js";
 import { Error } from "mongoose";
 import {
@@ -10,7 +10,7 @@ import { jwtTokenVerify } from "../middlewares/index.js";
 
 const router = express.Router();
 
-router.get("/", jwtTokenVerify, async (req: Request, res) => {
+router.get("/", jwtTokenVerify, async (req: CustomRequest, res) => {
   const userID = req.decodedToken?.userID;
   try {
     const user = await User.findOne({ _id: userID }, { password: 0 });
@@ -36,7 +36,7 @@ router.get("/", jwtTokenVerify, async (req: Request, res) => {
   }
 });
 
-router.get("/by-username", jwtTokenVerify, async (req: Request, res) => {
+router.get("/by-username", jwtTokenVerify, async (req: CustomRequest, res) => {
   const { username } = req.query;
   const token = req.decodedToken;
   //Convert Object to Array
@@ -117,7 +117,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/list-all", jwtTokenVerify, async (req: Request, res) => {
+router.get("/list-all", jwtTokenVerify, async (req: CustomRequest, res) => {
   const token = req.decodedToken;
   if (!token) {
     return res.status(401).send({ message: "Unauthorized Missing Auth Token" });

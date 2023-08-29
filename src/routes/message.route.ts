@@ -1,14 +1,13 @@
-import express, { Request } from "express";
+import express, { CustomRequest } from "express";
 import { jwtTokenVerify } from "../middlewares/index.js";
 import UserRoom from "../models/userRoom.model.js";
 import Message from "../models/message.model.js";
-import User from "../models/user.model.js";
 
 const router = express.Router();
 
 router.use(jwtTokenVerify);
 
-router.get("/by-roomid", async (req: Request, res) => {
+router.get("/by-roomid", async (req: CustomRequest, res) => {
   const { roomID } = req.query;
   const userID = req.decodedToken?.userID;
 
@@ -49,7 +48,7 @@ router.get("/by-roomid", async (req: Request, res) => {
   }
 });
 
-router.post("/by-roomid", async (req: Request, res) => {
+router.post("/by-roomid", async (req: CustomRequest, res) => {
   const { roomID } = req.query;
   const { message } = req.body;
   const userID = req.decodedToken?.userID;

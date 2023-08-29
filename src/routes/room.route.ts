@@ -1,4 +1,4 @@
-import express, { Request } from "express";
+import express, { CustomRequest } from "express";
 import { jwtTokenVerify } from "../middlewares/index.js";
 import Room from "../models/room.model.js";
 import UserRoom from "../models/userRoom.model.js";
@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.use(jwtTokenVerify);
 
-router.post("/create", async (req: Request, res) => {
+router.post("/create", async (req: CustomRequest, res) => {
   const { roomName } = req.query;
   try {
     const room = await Room.create({
@@ -28,7 +28,7 @@ router.post("/create", async (req: Request, res) => {
   }
 });
 
-router.post("/join", async (req: Request, res) => {
+router.post("/join", async (req: CustomRequest, res) => {
   const { roomID } = req.query;
   try {
     const userRoom = await UserRoom.create({
@@ -44,7 +44,7 @@ router.post("/join", async (req: Request, res) => {
   }
 });
 
-router.get("/belong", async (req: Request, res) => {
+router.get("/belong", async (req: CustomRequest, res) => {
   const userID = req.decodedToken?.userID;
   try {
     const results = await UserRoom.find({ user_id: userID }).populate(
@@ -61,7 +61,7 @@ router.get("/belong", async (req: Request, res) => {
   }
 });
 
-router.get("/list-all", async (req: Request, res) => {
+router.get("/list-all", async (req: CustomRequest, res) => {
   const token = req.decodedToken;
   //Convert Object to Array
   const role = Object.values(token!.role);

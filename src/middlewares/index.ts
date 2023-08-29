@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction, CustomRequest } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
@@ -6,7 +6,7 @@ dotenv.config();
 const TOKEN_SECRET = process.env.TOKEN_SECRET ?? "token1234";
 
 export function jwtTokenVerify(
-  req: Request,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) {

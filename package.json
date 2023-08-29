@@ -14,7 +14,7 @@
     "uuid": "^9.0.0"
   },
   "scripts": {
-    "prestart": "tsc",
+    "prestart": "tsc && eslint src/**/*.ts",
     "start": "node .",
     "build": "tsc",
     "dev": "nodemon"
@@ -26,7 +26,10 @@
     "@types/node": "^20.5.1",
     "@types/socket.io": "^3.0.2",
     "@types/uuid": "^9.0.2",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
     "dotenv": "^16.3.1",
+    "eslint": "^8.48.0",
     "nodemon": "^3.0.1",
     "socket.io": "^4.7.2",
     "ts-node": "^10.9.1",
