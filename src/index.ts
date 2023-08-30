@@ -10,6 +10,7 @@ import userRouter from "./routes/user.route.js";
 import roomRouter from "./routes/room.route.js";
 import messageRouter from "./routes/message.route.js";
 import { createMessage } from "./sockets/index.js";
+import os from "os";
 
 dotenv.config();
 const app = express();
@@ -45,6 +46,7 @@ app.use("/user", userRouter);
 app.use("/room", roomRouter);
 app.use("/message", messageRouter);
 app.get("/", (req, res) => {
+  console.log(os.hostname);
   return res.send({ message: "welcome to chatApp" });
 });
 
@@ -72,6 +74,8 @@ io.on("connection", (socket) => {
       username: string,
       message: string
     ) => {
+      console.log(socket.id);
+      console.log(os.hostname);
       if (!token) {
         socket.emit("invalidToken");
         return;
