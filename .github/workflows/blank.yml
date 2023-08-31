@@ -21,7 +21,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run Docker Compose up
-        run: docker compose up
+        run: docker-compose up --build
         env:
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
           MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
