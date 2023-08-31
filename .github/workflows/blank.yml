@@ -1,0 +1,33 @@
+# This is a basic workflow to help you get started with Actions
+
+name: self-hosted-test
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build_and_deploy:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+    environment: production
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Run Docker Compose up
+        run: docker compose up
+        env:
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
+          MONGO_DATABASE_USERNAME: ${{ secrets.MONGO_DATABASE_USERNAME }}
+          MONGO_DATABASE_PASSWORD: ${{ secrets.MONGO_DATABASE_PASSWORD }}
+          MONGO_BASEURL: ${{ secrets.MONGO_BASEURL }}
+          TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
+          PORT: 8080

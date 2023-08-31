@@ -32,7 +32,7 @@ const port = process.env.PORT ?? 8080;
 const TOKEN_SECRET = process.env.TOKEN_SECRET ?? "token1234";
 const MONGO_DATABASE_USERNAME = process.env.MONGO_DATABASE_USERNAME ?? "nodejs";
 const MONGO_DATABASE_PASSWORD = process.env.MONGO_DATABASE_PASSWORD ?? "1234";
-const MONGO_BASEURL = process.env.MONGO_BASEURL ?? "localhost:27017";
+const MONGO_BASEURL = process.env.MONGO_BASEURL ?? "web-chat-mongo:27017";
 const MONGO_URL = `mongodb://${MONGO_DATABASE_USERNAME}:${MONGO_DATABASE_PASSWORD}@${MONGO_BASEURL}/web-chat`;
 
 mongoose

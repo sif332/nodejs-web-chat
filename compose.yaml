@@ -14,7 +14,7 @@ services:
     networks:
       backend:
     deploy:
-      replicas: 3
+      replicas: 1
     depends_on:
       - web-chat-mongo
 
