@@ -4,13 +4,12 @@ import bodyParser from "body-parser";
 import { Server } from "socket.io";
 import http from "http";
 import cors from "cors";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routes/user.route.js";
 import roomRouter from "./routes/room.route.js";
 import messageRouter from "./routes/message.route.js";
 import { createMessage } from "./sockets/index.js";
-import os from "os";
+import { postgresClient } from "./models/postgresDev.model.js";
 
 dotenv.config();
 const app = express();
@@ -30,24 +29,20 @@ const server = http.createServer(app);
 
 const port = process.env.PORT ?? 8080;
 const TOKEN_SECRET = process.env.TOKEN_SECRET ?? "token1234";
-const MONGO_DATABASE_USERNAME = process.env.MONGO_DATABASE_USERNAME ?? "nodejs";
-const MONGO_DATABASE_PASSWORD = process.env.MONGO_DATABASE_PASSWORD ?? "1234";
-const MONGO_BASEURL = process.env.MONGO_BASEURL ?? "web-chat-mongo:27017";
-const MONGO_URL = `mongodb://${MONGO_DATABASE_USERNAME}:${MONGO_DATABASE_PASSWORD}@${MONGO_BASEURL}/web-chat`;
-console.log(MONGO_URL);
 
-mongoose
-  .connect(MONGO_URL)
-  .then(() => console.log("Connected to Web-Chat Database"))
+postgresClient
+  .connect()
+  .then(async () => {
+    console.log("Connected to Web-Chat-Dev Database");
+  })
   .catch((error) =>
-    console.log("Failed to connect Web-Chat Database:", error.message)
+    console.log("Failed to connect Web-Chat-Dev Database:", error.message)
   );
 
 app.use("/user", userRouter);
 app.use("/room", roomRouter);
 app.use("/message", messageRouter);
 app.get("/", (req, res) => {
-  console.log(os.hostname);
   return res.send({ message: "welcome to chatApp" });
 });
 
@@ -76,7 +71,6 @@ io.on("connection", (socket) => {
       message: string
     ) => {
       console.log(socket.id);
-      console.log(os.hostname);
       if (!token) {
         socket.emit("invalidToken");
         return;
