@@ -1,22 +1,18 @@
 version: "3.9"
 
 services:
-  web-chat-nodejs:
+  webchat-nodejs:
     build: .
     ports:
       - "8080"
     environment:
-      - MONGO_DATABASE_USERNAME=${MONGO_DATABASE_USERNAME}
-      - MONGO_DATABASE_PASSWORD=${MONGO_DATABASE_PASSWORD}
-      - MONGO_BASEURL=${MONGO_BASEURL}
-      - PORT=${PORT}
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
       - TOKEN_SECRET=${TOKEN_SECRET}
     networks:
       backend:
     deploy:
       replicas: 1
-    depends_on:
-      - web-chat-mongo
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -38,44 +34,10 @@ services:
       backend:
         ipv4_address: 172.2.0.254
     depends_on:
-      - web-chat-nodejs
-
-  web-chat-mongo:
-    image: mongo:4.4.23
-    restart: always
-    volumes:
-      - web-chat-mongo-data:/data/db
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-      MONGO_DATABASE_USERNAME: ${MONGO_DATABASE_USERNAME}
-      MONGO_DATABASE_PASSWORD: ${MONGO_DATABASE_PASSWORD}
-      MONGO_INITDB_DATABASE: web-chat
-    networks:
-      backend:
-
-
-  mongo-express:
-    image: mongo-express:latest
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@web-chat-mongo:27017/
-    depends_on:
-      - web-chat-mongo
-    networks:
-      backend:
-
+      - webchat-nodejs
 
 networks:
   backend:
     ipam:
       config:
         - subnet: 172.2.0.0/24
-
-volumes:
-  web-chat-mongo-data:
