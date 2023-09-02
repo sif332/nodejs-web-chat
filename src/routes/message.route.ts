@@ -26,7 +26,7 @@ router.get("/by-roomid", async (req: CustomRequest, res) => {
     //query all message in that room by roomID and connect user_id of message collection to username of user collection
     const messagesQuery = (
       await postgresClient.query(
-        "SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.user_id WHERE messages.room_id = $1",
+        "SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.user_id WHERE messages.room_id = $1 ORDER BY messages.created_at DESC",
         [parseInt(roomID as string, 10)]
       )
     ).rows;
