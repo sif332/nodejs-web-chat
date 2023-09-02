@@ -34,7 +34,7 @@ export interface IMessages {
 }
 
 export const postgresClient = new pg.Client({
-  host: process.env.POSTGRES_BASEURL ?? "localhost",
+  host: process.env.POSTGRES_BASEURL ?? "home-postgres-dev",
   port: 5432,
   database: "webchat-dev",
   user: process.env.POSTGRES_USER ?? "sif332",
