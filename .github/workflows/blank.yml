@@ -23,10 +23,7 @@ jobs:
         run: docker-compose up -d --build
         env:
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
-          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
-          MONGO_DATABASE_USERNAME: ${{ secrets.MONGO_DATABASE_USERNAME }}
-          MONGO_DATABASE_PASSWORD: ${{ secrets.MONGO_DATABASE_PASSWORD }}
-          MONGO_BASEURL: ${{ secrets.MONGO_BASEURL }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
           PORT: 8080
