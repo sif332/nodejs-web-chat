@@ -174,7 +174,7 @@ Web Socket:
 
 ### Database
 I use PostgreSQL as the database.
-user_room is a weak entity that its primary key relied on user_id and room_id (the combination of them is unique.)
+user_room is a weak entity that its primary key relied on user_id and room_id (the combination of them is unique).
 !["Database"](https://i.imgur.com/13YP1nv.png)
 
 ### Future Improvements
