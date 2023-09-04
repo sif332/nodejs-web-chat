@@ -6,11 +6,11 @@
 [Check out the Backend GitHub Repo](https://github.com/sif332/nodejs-web-chat)
 
 ### Why did I develop this project?
-Because I just want to test my full-stack skills, tools, frameworks and my home server infrastructure before starting a new project called "Real-time Menu and Point of Sale System" that will acctually have real users.
+Because I just want to test my full-stack skills, tools, frameworks and my home server infrastructure before starting a new project called "Real-time Menu and Point of Sale System" that will actually have real users.
 
-Therefore, this project will not be huge and missing many feature but the core of chatting feature still work.
+Therefore, this project will not be huge and missing many feature but the core of chatting features still works.
 
-Additionally, I will list lots of possible future improvements for this project.
+Additionally, I will list many possible future improvements for this project.
 
 ### The project's toolstack includes:
 * React.js
@@ -188,8 +188,8 @@ user_room is a weak entity that its primary key relied on user_id and room_id (t
 3. Edit Profile Picture and Info
 4. Responsive UI (Desktop and Mobile versions)
 5. End-to-end encryption
-   This time, I can see your messages because they are not encyrpted. 
+   This time, I can see your messages because they are not encrypted. 
    In the future, I will develop a secret room that can join only 2 people. When users join that room, the client side will generate private key and public key. 
-   The private key will be store in local storage of the users browser (there will be export secret key option). The public key will be shared to their interlocutor.
+   The private key will be stored in local storage of the users browser (there will be export secret key option). The public key will be shared to their interlocutor.
    Before interlocutors send a message to a user, interlocutors will encrypt that message with the user's public key. 
-   Now, only user that own private key will be able to decrypt and read that message even if the server want to !!!
+   Now, only user that own private key will be able to decrypt and read that message even if the server wants to !!!
